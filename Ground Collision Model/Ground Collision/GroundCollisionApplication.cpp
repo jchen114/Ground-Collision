@@ -5,6 +5,8 @@
 
 GroundCollisionApplication::GroundCollisionApplication(ProjectionMode mode):BulletOpenGLApplication(mode) {
 
+	m_DrawCallback = std::bind(&GroundCollisionApplication::DrawCallback, this);
+
 }
 
 GroundCollisionApplication::GroundCollisionApplication()
@@ -118,6 +120,34 @@ GameObject *GroundCollisionApplication::CreateBox(const btVector3 &halfSize, flo
 
 	GameObject *aBox = CreateGameObject(new btBox2dShape(halfSize), mass, color, position);
 	return aBox;
+}
+
+void GroundCollisionApplication::DrawCallback() {
+
+	if (box)
+	{ // Draw the four corners of the box.
+
+	}
+
+}
+
+static void DrawFilledCircle(GLfloat x, GLfloat y, GLfloat radius, const btVector3 &color){
+	int triangleAmount = 20; //# of triangles used to draw circle
+	glColor3f(color.x(), color.y(), color.z());
+	glPushMatrix();
+	glTranslatef(x, y, 0.9);
+	//GLfloat radius = 0.8f; //radius
+
+	glBegin(GL_TRIANGLE_FAN);
+	for (int i = 0; i <= triangleAmount; i++) {
+		glVertex2f(
+			(radius * cos(i *  TWO_PI / triangleAmount)),
+			(radius * sin(i * TWO_PI / triangleAmount))
+			);
+	}
+	glEnd();
+
+	glPopMatrix();
 }
 
 #pragma endregion CREATION

@@ -1,11 +1,13 @@
 #pragma once
 #include "BulletOpenGLApplication.h"
+
 class GroundCollisionApplication :
 	public BulletOpenGLApplication
 {
 public:
 	GroundCollisionApplication();
 	GroundCollisionApplication(ProjectionMode mode);
+	~GroundCollisionApplication();
 
 	virtual void InitializePhysics() override;
 	virtual void ShutdownPhysics() override;
@@ -16,6 +18,9 @@ public:
 
 	GameObject *box = NULL;
 
-	~GroundCollisionApplication();
+	void DrawCallback();
+
 };
+
+static void DrawFilledCircle(GLfloat x, GLfloat y, GLfloat radius, const btVector3 &color = btVector3(255, 255, 255));
 
