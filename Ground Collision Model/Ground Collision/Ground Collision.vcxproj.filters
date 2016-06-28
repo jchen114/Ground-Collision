@@ -51,6 +51,9 @@
     <ClInclude Include="GroundCollisionApplication.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GroundCollisionManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -75,6 +78,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GroundCollisionApplication.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GroundCollisionManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -53,6 +53,7 @@ void GroundCollisionApplication::Mouse(int button, int state, int x, int y) {
 					if (*iter == box)
 					{
 						m_objects.erase(iter);
+						m_CollisionManager->RemoveObjectForCollision(box);
 						break;
 					}
 				}
@@ -70,6 +71,7 @@ void GroundCollisionApplication::Mouse(int button, int state, int x, int y) {
 			btVector3 color1(((double)rand() / RAND_MAX), ((double)rand() / RAND_MAX), ((double)rand() / RAND_MAX));
 
 			box = CreateBox(halfSize, 5, color1, pos);
+			m_CollisionManager->AddObjectForCollision(box);
 
 		}
 			break;
@@ -81,7 +83,6 @@ void GroundCollisionApplication::Mouse(int button, int state, int x, int y) {
 		default:
 			break;
 		}
-
 
 		break;
 	default:
@@ -112,7 +113,8 @@ void GroundCollisionApplication::CreateGround() {
 	// Create a ground box
 	btVector3 halfSize(30, 1, 0);
 	btVector3 position(0, -5, Z_PLANE);
-	CreateBox(halfSize, 0, btVector3(0.1f, 0.3f, 0.8f), position);
+	GameObject *ground = CreateBox(halfSize, 0, btVector3(0.1f, 0.3f, 0.8f), position);
+	m_CollisionManager->AddObjectToCollideWith(ground);
 }
 
 
@@ -124,30 +126,7 @@ GameObject *GroundCollisionApplication::CreateBox(const btVector3 &halfSize, flo
 
 void GroundCollisionApplication::DrawCallback() {
 
-	if (box)
-	{ // Draw the four corners of the box.
-
-	}
-
-}
-
-static void DrawFilledCircle(GLfloat x, GLfloat y, GLfloat radius, const btVector3 &color){
-	int triangleAmount = 20; //# of triangles used to draw circle
-	glColor3f(color.x(), color.y(), color.z());
-	glPushMatrix();
-	glTranslatef(x, y, 0.9);
-	//GLfloat radius = 0.8f; //radius
-
-	glBegin(GL_TRIANGLE_FAN);
-	for (int i = 0; i <= triangleAmount; i++) {
-		glVertex2f(
-			(radius * cos(i *  TWO_PI / triangleAmount)),
-			(radius * sin(i * TWO_PI / triangleAmount))
-			);
-	}
-	glEnd();
-
-	glPopMatrix();
+	m_CollisionManager->DrawObjectsForCollision();
 }
 
 #pragma endregion CREATION
